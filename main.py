@@ -171,14 +171,10 @@ class Problem_29(object):
         return value
 
     def divide(self, dividend, divisor):
-        """
-        :type dividend: int
-        :type divisor: int
-        :rtype: int
-        """
+        dividend = float(dividend)
+        divisor = float(divisor)
         output = dividend / divisor
-        output = round(int(output))
-        return self.enforce_32bit_signed(output)
+        return int(self.enforce_32bit_signed(output))
 
 
 class Problem_2438(object):
