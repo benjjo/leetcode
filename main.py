@@ -171,10 +171,21 @@ class Problem_29(object):
         return value
 
     def divide(self, dividend, divisor):
-        dividend = float(dividend)
-        divisor = float(divisor)
-        output = dividend / divisor
-        return int(self.enforce_32bit_signed(output))
+        if divisor == 0:
+            raise ZeroDivisionError("division by zero")
+        neg = (dividend < 0) ^ (divisor < 0)
+        a = abs(dividend)
+        b = abs(divisor)
+        q = 0
+        while a >= b:
+            shift = a.bit_length() - b.bit_length()
+            cand = b << shift
+            if cand > a:
+                shift -= 1
+                cand = b << shift
+            a -= cand
+            q += 1 << shift
+        return self.enforce_32bit_signed((-q if neg else q))
 
 
 class Problem_2438(object):
